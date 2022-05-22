@@ -1,0 +1,16 @@
+export enum PostMessagesEnum {
+  NOT_FOUND = 'posts.not_found.error',
+  POST_UUID_IS_INVALID = 'posts.post_uuid_is_invalid.error',
+  SHORT_DESCRIPTION_INVALID = 'posts.short_description_invalid.error',
+  DESCRIPTION_INVALID = 'posts.description_invalid.error',
+  STATUS_INVALID = 'posts.status_invalid.error',
+  ACTION_INVALID = 'posts.action_invalid.error',
+  PHONE_INVALID = 'posts.phone_invalid.error',
+  POSTAL_CODE_INVALID = 'posts.postal_code_invalid.error',
+  UNIT_TYPE_INVALID = 'posts.unit_type_invalid.error',
+  CITY_INVALID = 'posts.city_invalid.error',
+  UUID_INVALID = 'posts.uuid_invalid.error',
+  OBJECT_IS_INVALID = 'posts.object_is_invalid.error',
+  IMAGE_POST_INVALID = 'posts.image_post_invalid.error',
+  USER_UUID_INVALID = 'posts.user_uuid_invalid.error',
+}
