@@ -1,7 +1,8 @@
 import { CustomConfigModule } from 'src/config/custom-config.module';
 import { CustomMessage } from 'src/shared/errors/custom.error';
-import { PostMessagesEnum } from '../enums/Post.enum';
-import { PostMessagesType } from '../types/Post-messages.type';
+import { PostMessagesEnum } from '../enums/post.enum';
+import { PostMessagesType } from '../types/post-messages.type';
+
 
 new CustomConfigModule();
 

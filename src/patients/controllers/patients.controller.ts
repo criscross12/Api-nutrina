@@ -1,13 +1,14 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
   Post,
   Res,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { buildPaginate } from 'src/shared/builders/build-paginate.builder';
 import { buildQuery } from 'src/shared/builders/build-query.utils';
 import { BuildQueryPatient } from 'src/shared/decorators/build-query.decorator';
@@ -18,18 +19,14 @@ import { CreatePatientDto } from '../dtos/create-patient.dto';
 import { GetPatientWithPaginateDto } from '../dtos/get-patient-with-paginate.dto';
 import { GetPatientDto } from '../dtos/get-patient.dto';
 import { QueryPatientDto } from '../dtos/query-patient.dto';
-import { PatientsService } from '../services/patients.service';
 import { configBuildQueryPatient } from '../static';
 
 @Controller('patients')
 @ApiTags('patients')
 export class PatientsController {
-  constructor(
-    private readonly patientsApp: PatientsServiceApp,
-    private readonly patientsService: PatientsService,
-  ) {}
+  constructor(private readonly patientsApp: PatientsServiceApp) {}
 
-  @Post('/patients')
+  @Post()
   createPatient(
     @Res() res,
     @Body() createPatientDto: CreatePatientDto,
@@ -40,25 +37,37 @@ export class PatientsController {
     );
   }
 
-  @ApiResponse({ type: [GetPatientWithPaginateDto] })
+  //TODO Analizar si es util este controller
+  @ApiOkResponse({ type: [GetPatientDto] })
   @Get()
-  @ExcListApiQueryPatient()
-  // @UseGuards(ApiAuthGuard)
-  async getbyfilter(
-    @Res() res,
-    @BuildQueryPatient() queryPatientDto: Partial<QueryPatientDto>,
-  ) {
-    const data = this.patientsService.findAll(
-      buildQuery(queryPatientDto, configBuildQueryPatient),
-      queryPatientDto.search,
-      buildPaginate(queryPatientDto),
-    );
-    return handleResponse(res, data);
+  findAll(@Res() res: Response): Promise<GetPatientDto[]> {
+    return handleResponse(res, this.patientsApp.findAll());
   }
+
+  // @ApiResponse({ type: [GetPatientWithPaginateDto] })
+  // @Get()
+  // @ExcListApiQueryPatient()
+  // // @UseGuards(ApiAuthGuard)
+  // async getbyfilter(
+  //   @Res() res,
+  //   @BuildQueryPatient() queryPatientDto: Partial<QueryPatientDto>,
+  // ) {
+  //   const data = this.patientsService.findAllbyFilters(
+  //     buildQuery(queryPatientDto, configBuildQueryPatient),
+  //     queryPatientDto.search,
+  //     buildPaginate(queryPatientDto),
+  //   );
+  //   return handleResponse(res, data);
+  // }
 
   @ApiResponse({ type: GetPatientDto })
   @Get(':uuid')
   getOne(@Res() res, @Param('uuid', ParseUUIDPipe) uuid: string) {
     return handleResponse(res, this.patientsApp.getOne(uuid));
+  }
+
+  @Delete(':uuid')
+  delete(@Res() res, @Param('uuid', ParseUUIDPipe) uuid: string) {
+    return handleResponse(res, this.patientsApp.delete(uuid));
   }
 }

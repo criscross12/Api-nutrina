@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class PatientDocument extends Document {
   @Prop({ type: String, default: () => uuidv4() })
   uuid: string;
-  
+
   @Prop()
   name: string;
 
@@ -31,6 +31,9 @@ export class PatientDocument extends Document {
   @Prop()
   reason: string;
 
+  @Prop()
+  sex: string;
+
   @Prop({ type: Date, nullable: false, default: Date.now() })
   created_at: Date;
 
@@ -44,6 +47,4 @@ export class PatientDocument extends Document {
   confirmation_at: Date;
 }
 
-export const PatientSchema = SchemaFactory.createForClass(
-  PatientDocument,
-);
+export const PatientSchema = SchemaFactory.createForClass(PatientDocument);

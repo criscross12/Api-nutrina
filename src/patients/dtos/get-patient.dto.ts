@@ -39,6 +39,9 @@ export class GetPatientDto {
   reason: string;
 
   @ApiProperty()
+  sex: string;
+
+  @ApiProperty()
   readonly created_at: string;
   @Exclude()
   readonly updated_at: string;

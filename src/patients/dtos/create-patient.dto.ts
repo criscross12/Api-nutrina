@@ -28,5 +28,8 @@ export class CreatePatientDto {
   @ApiProperty()
   reason: string;
 
+  @ApiProperty()
+  sex: string;
+
   created_at: number;
 }

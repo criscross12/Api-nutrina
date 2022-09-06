@@ -12,6 +12,8 @@ export const handleResponse = (response, data: Promise<any>) =>
     .catch((err) => {
       throw new HttpHandleException(err);
     });
+export const parseDocument = (document: Document) =>
+  document ? JSON.parse(JSON.stringify(document)) : document;
 
 export const hendleAxiosResponse = (res: Promise<AxiosResponse<any, any>>) =>
   res

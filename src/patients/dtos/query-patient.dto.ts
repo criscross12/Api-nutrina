@@ -40,6 +40,9 @@ export class QueryPatientDto extends PaginateDto {
   reason: string;
 
   @ApiProperty()
+  sex: string;
+
+  @ApiProperty()
   readonly created_at: string;
   @Exclude()
   readonly updated_at: string;

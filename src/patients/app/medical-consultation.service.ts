@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { iccFormulation, imcFormulation } from 'src/shared/utils/helpers';
+import {
+  iccFormulation,
+  imcFormulation,
+  plusFivePl,
+  plusThreePl,
+} from 'src/shared/utils/helpers';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
 import { RegisterMedicalConsultationDto } from '../dtos/medical-consultation.dto';
 import { QueryMedialConsultationDto } from '../dtos/query-medical-consultation.dto';
@@ -23,6 +28,19 @@ export class MedicalConsultationServiceApp {
       registerMedicalConsultationDto.basic_measurements.waist,
       registerMedicalConsultationDto.basic_measurements.hip,
     );
+    registerMedicalConsultationDto.plyometric_measurements.three_pl =
+      plusThreePl(
+        registerMedicalConsultationDto.plyometric_measurements.pl_triceps,
+        registerMedicalConsultationDto.plyometric_measurements.pl_subscapular,
+        registerMedicalConsultationDto.plyometric_measurements.pl_supraspinal,
+      );
+    registerMedicalConsultationDto.plyometric_measurements.five_pl = plusFivePl(
+      registerMedicalConsultationDto.plyometric_measurements.pl_triceps,
+      registerMedicalConsultationDto.plyometric_measurements.pl_subscapular,
+      registerMedicalConsultationDto.plyometric_measurements.pl_supraspinal,
+      registerMedicalConsultationDto.plyometric_measurements.pl_abdominal,
+      registerMedicalConsultationDto.plyometric_measurements.pl_thigh,
+    );
     return plainToClass(
       GetMedialConsultationDto,
       await this.medicalConsultationService.createConsultation(
@@ -32,7 +50,18 @@ export class MedicalConsultationServiceApp {
   };
 
   getOne = async (uuid: string): Promise<GetMedialConsultationDto> => {
-    const res = await this.medicalConsultationService.getMedicalConsultationByUuid(uuid);
+    const res =
+      await this.medicalConsultationService.getMedicalConsultationByUuid(uuid);
+    return plainToClass(QueryMedialConsultationDto, res);
+  };
+
+  getOneByUserUuid = async (
+    uuid: string,
+  ): Promise<GetMedialConsultationDto[]> => {
+    const res =
+      await this.medicalConsultationService.getAllMedicalConsultationByUuid(
+        uuid,
+      );
     return plainToClass(QueryMedialConsultationDto, res);
   };
 }
