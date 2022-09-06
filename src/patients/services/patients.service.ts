@@ -5,7 +5,7 @@ import { PatientDocument } from '../schemas/patient.schema';
 import { Model } from 'mongoose';
 import { plainToClass } from 'class-transformer';
 import { GetPatientDto } from '../dtos/get-patient.dto';
-import { convertToJson } from 'src/shared/helpers';
+import { convertToJson, parseDocument } from 'src/shared/helpers';
 import { PaginateDto } from 'src/shared/dtos/paginate.dto';
 import { QueryPatientDto } from '../dtos/query-patient.dto';
 import { GetPaginatedPatient } from 'src/shared/interfaces/index.interfaces';
@@ -20,6 +20,18 @@ export class PatientsService {
   getPatientByUuid = async (uuid: string): Promise<GetPatientDto> =>
     convertToJson(await this.patientModel.findOne({ uuid }));
 
+  deletePatientByUuid = async (uuid: string) => {
+    return await this.patientModel.findOneAndUpdate(
+      { uuid },
+      { deleted_at: Date.now() },
+    );
+  };
+
+  getPatients = async (): Promise<GetPatientDto[]> => {
+    const post = await this.patientModel.find({ deleted_at: null });
+    return post.map((u) => parseDocument(u));
+  };
+
   createPatient = async (
     createPatientDto: CreatePatientDto,
   ): Promise<GetPatientDto> => {
@@ -30,7 +42,7 @@ export class PatientsService {
     return convertToJson(res);
   };
 
-  async findAll(
+  async findAllbyFilters(
     queryPostDto: QueryPatientDto,
     search: string,
     paginate: PaginateDto,

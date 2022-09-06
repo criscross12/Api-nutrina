@@ -47,6 +47,12 @@ export class PlyometricMeasurementsDocument extends Document {
 
   @Prop()
   d_femur: number;
+
+  @Prop()
+  three_pl: number;
+
+  @Prop()
+  five_pl: number;
 }
 
 export const PlyometricMeasurementsSchema = SchemaFactory.createForClass(
