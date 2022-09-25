@@ -1,7 +1,7 @@
-import { POST_MESSAGES } from "src/patients/messages/post.message";
+import { PATIENT_MESSAGES } from 'src/modules/patients/messages/patients.message';
 
 export const HTTP_APP_ERROR = {
-  ...POST_MESSAGES,
+  ...PATIENT_MESSAGES,
   'empty.error': {
     message: 'This field does not must be empty',
     error: 'empty.error',

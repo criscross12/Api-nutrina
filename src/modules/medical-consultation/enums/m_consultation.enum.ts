@@ -1,0 +1,16 @@
+export enum MConsultationMessagesEnum {
+  NOT_FOUND = 'patient.not_found.error',
+  PATIENT_UUID_IS_INVALID = 'patient.post_uuid_is_invalid.error',
+  SHORT_DESCRIPTION_INVALID = 'patient.short_description_invalid.error',
+  DESCRIPTION_INVALID = 'patient.description_invalid.error',
+  STATUS_INVALID = 'patient.status_invalid.error',
+  ACTION_INVALID = 'patient.action_invalid.error',
+  PHONE_INVALID = 'patient.phone_invalid.error',
+  POSTAL_CODE_INVALID = 'patient.postal_code_invalid.error',
+  UNIT_TYPE_INVALID = 'patient.unit_type_invalid.error',
+  CITY_INVALID = 'patient.city_invalid.error',
+  UUID_INVALID = 'patient.uuid_invalid.error',
+  OBJECT_IS_INVALID = 'patient.object_is_invalid.error',
+  IMAGE_POST_INVALID = 'patient.image_post_invalid.error',
+  USER_UUID_INVALID = 'patient.user_uuid_invalid.error',
+}

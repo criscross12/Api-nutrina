@@ -6,7 +6,7 @@ import {
 import { Request } from 'express';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import { QueryPatientDto } from 'src/patients/dtos/query-patient.dto';
+import { QueryPatientDto } from 'src/modules/patients/dtos/query-patient.dto';
 
 export const BuildQueryPatient = createParamDecorator(
   async (
