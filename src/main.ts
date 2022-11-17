@@ -6,7 +6,6 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { appConfigLoader } from './config/configs/database.loader';
 
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
@@ -21,7 +20,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
-  
+
+  app.enableCors();
   await app.listen(appConfig.port, null, () => {
     logger.log(`Listening: http://localhost:${appConfig.port}`, 'AppConfig');
     logger.log(`Environment: ${appConfig.env}`, 'AppConfig');

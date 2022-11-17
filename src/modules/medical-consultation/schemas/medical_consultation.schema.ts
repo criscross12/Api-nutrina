@@ -4,9 +4,6 @@ import { Document } from 'mongoose';
 @Schema({ collection: 'medical_consultation' })
 export class MedicalConsultationDocument extends Document {
   @Prop()
-  account_uuid: string;
-
-  @Prop()
   user_uuid: string;
 
   @Prop()
@@ -27,6 +24,9 @@ export class MedicalConsultationDocument extends Document {
   @Prop({ type: Object, default: [] })
   circumferences: Object;
 
+  @Prop({ type: Object, default: [] })
+  energy_distribution: Object;
+
   @Prop()
   somatocarta: number;
 
@@ -44,6 +44,9 @@ export class MedicalConsultationDocument extends Document {
 
   @Prop()
   mifflin_st: number;
+
+  @Prop()
+  note: string;
 
   @Prop({ type: Date, nullable: false, default: Date.now() })
   created_at: number;

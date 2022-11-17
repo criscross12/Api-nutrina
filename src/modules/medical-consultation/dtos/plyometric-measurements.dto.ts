@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber } from 'class-validator';
 //TODO crear mensajes de validaciones
 import { MConsultationMessagesEnum } from '../enums/m_consultation.enum';
 
@@ -27,22 +28,9 @@ export class PlyometricMeasurementsDto {
   @ApiProperty()
   pl_leg: number;
 
-  @ApiProperty()
-  pr_relaxed_arm: number;
-
-  @ApiProperty()
-  pr_flexed_arm: number;
-
-  @ApiProperty()
-  pr_mid_thigh: number;
-
-  @ApiProperty()
-  pr_leg: number;
-
-  @ApiProperty()
-  d_humerus: number;
-
+  @IsNumber()
   three_pl: number;
 
+  @IsNumber()
   five_pl: number;
 }

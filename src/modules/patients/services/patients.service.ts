@@ -62,7 +62,7 @@ export class PatientsService {
       .find(queryPostDto, score)
       .limit(paginate.perPage)
       .skip(paginate.perPage * (paginate.page - 1))
-      .sort(score)
+      // .sort(score)
       .exec();
     const count = await this.patientModel.countDocuments(queryPostDto);
     const getPaginatedPost: GetPaginatedPatient = {

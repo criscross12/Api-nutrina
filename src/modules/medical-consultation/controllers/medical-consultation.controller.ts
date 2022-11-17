@@ -7,7 +7,12 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { handleResponse } from 'src/shared/helpers';
 import { MedicalConsultationServiceApp } from '../app/medical-consultation.service';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
@@ -20,16 +25,13 @@ export class MedicalConsultationController {
     private readonly medicalConsultationServiceApp: MedicalConsultationServiceApp,
   ) {}
 
+  @ApiCreatedResponse({ type: GetMedialConsultationDto })
   @Post('/medical-consultation')
-  createConsultation(
-    @Res() res,
-    @Body() registerMedicalConsultationDto: RegisterMedicalConsultationDto,
-  ): Promise<GetMedialConsultationDto> {
+  createConsultation(@Res() res, @Body() data: RegisterMedicalConsultationDto) {
+    console.log(data);
     return handleResponse(
       res,
-      this.medicalConsultationServiceApp.createConsultation(
-        registerMedicalConsultationDto,
-      ),
+      this.medicalConsultationServiceApp.createConsultation(data),
     );
   }
 

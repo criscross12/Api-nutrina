@@ -7,9 +7,11 @@ import {
 import { MedicalConsultationController } from './controllers/medical-consultation.controller';
 import { MedicalConsultationServiceApp } from './app/medical-consultation.service';
 import { MedicalConsultationService } from './services/medical-consultation.service';
+import { UserModule } from 'src/integrations/users/user.module';
 
 @Module({
   imports: [
+    UserModule,
     MongooseModule.forFeature([
       {
         name: MedicalConsultationDocument.name,

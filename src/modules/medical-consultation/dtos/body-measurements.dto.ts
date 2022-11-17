@@ -19,4 +19,10 @@ export class BodyMeasurementsDto {
 
   @ApiProperty()
   body_age: number;
+
+  maximum_weight: number;
+
+  minimum_weight: number;
+
+  ideal_weight: number;
 }

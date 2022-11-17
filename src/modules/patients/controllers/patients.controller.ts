@@ -9,6 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { buildPaginate } from 'src/shared/builders/build-paginate.builder';
 import { buildQuery } from 'src/shared/builders/build-query.utils';
 import { BuildQueryPatient } from 'src/shared/decorators/build-query.decorator';

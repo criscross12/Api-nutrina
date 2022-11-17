@@ -2,20 +2,19 @@ import { ApiProperty } from '@nestjs/swagger';
 //TODO crear mensajes de validaciones
 import { MConsultationMessagesEnum } from '../enums/m_consultation.enum';
 
-export class CircumferencesDto {
+export class EnergtDistributionDto {
   @ApiProperty()
-  c_relaxed_arm: number;
-
-  @ApiProperty()
-  c_contracted_arm: number;
+  kcalCarboHydrates: number;
 
   @ApiProperty()
-  c_leg_max: number;
+  kcalLipids: number;
 
   @ApiProperty()
-  c_mid_thigh: number;
+  kcalProteins: number;
 
-  c_corrected_arm: number;
+  gCarboHydrates: number;
 
-  c_corrected_leg: number;
+  gLipids: number;
+
+  gProteins: number;
 }

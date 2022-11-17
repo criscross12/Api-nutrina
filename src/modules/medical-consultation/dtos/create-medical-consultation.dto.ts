@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsObject, ValidateNested, IsOptional } from 'class-validator';
+import {
+  IsObject,
+  ValidateNested,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { MConsultationMessagesEnum } from '../enums/m_consultation.enum';
 import { VitalSignsDto } from './vital-signs.dto';
@@ -7,15 +12,22 @@ import { PlyometricMeasurementsDto } from './plyometric-measurements.dto';
 import { BodyMeasurementsDto } from './body-measurements.dto';
 import { BasicMeasurementsDto } from './basic-measurements.dto';
 import { CircumferencesDto } from './circumferences.dto';
+import { EnergtDistributionDto } from './energy-distrubition.dto';
+import { BoneDiametersDto } from './bone-diameters.dto';
+import { CreatePatientDto } from './create-patient.dto';
 
 export class RegisterMedicalConsultationDto {
-  account_uuid: string;
-
   @ApiProperty()
   user_uuid: string;
 
   @ApiProperty()
   patient_uuid: string;
+
+  @ApiProperty({ required: false })
+  @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
+  @Type(() => CreatePatientDto)
+  @ValidateNested()
+  data_patient: CreatePatientDto;
 
   @ApiProperty({ required: false })
   @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
@@ -43,9 +55,21 @@ export class RegisterMedicalConsultationDto {
 
   @ApiProperty({ required: false })
   @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
+  @Type(() => BoneDiametersDto)
+  @ValidateNested()
+  bone_diameters: BoneDiametersDto;
+
+  @ApiProperty({ required: false })
+  @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
   @Type(() => CircumferencesDto)
   @ValidateNested()
   circumferences: CircumferencesDto;
+
+  @ApiProperty({ required: false })
+  @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
+  @Type(() => EnergtDistributionDto)
+  @ValidateNested()
+  energy_distribution: EnergtDistributionDto;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -62,4 +86,8 @@ export class RegisterMedicalConsultationDto {
   valencia: number;
 
   mifflin_st: number;
+
+  @ApiProperty()
+  @IsString()
+  note: string;
 }
