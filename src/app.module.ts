@@ -1,6 +1,5 @@
 import { Module, Logger } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { PatientsModule } from './modules/patients/patients.module';
 import { CustomConfigModule } from './config/custom-config.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DbConnectionService } from './config/services/db-connection.service';
@@ -15,7 +14,6 @@ import { MedicalConsultationModule } from './modules/medical-consultation/medica
       new DbConnectionService().getDBConection(),
       new DbConnectionService().optionsDB(),
     ),
-    PatientsModule,
     MedicalConsultationModule,
   ],
   controllers: [AppController],

@@ -8,10 +8,12 @@ import { MedicalConsultationController } from './controllers/medical-consultatio
 import { MedicalConsultationServiceApp } from './app/medical-consultation.service';
 import { MedicalConsultationService } from './services/medical-consultation.service';
 import { UserModule } from 'src/integrations/users/user.module';
+import { AuthModule } from 'src/integrations/auth-sdk/src';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     MongooseModule.forFeature([
       {
         name: MedicalConsultationDocument.name,

@@ -18,13 +18,13 @@ import {
   GCarboHydratesRes,
   GcalLipids,
   GcalProteins,
-  suma,
 } from 'src/shared/utils/helpers';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
 import { RegisterMedicalConsultationDto } from '../dtos/create-medical-consultation.dto';
 import { QueryMedialConsultationDto } from '../dtos/query-medical-consultation.dto';
 import { MedicalConsultationService } from '../services/medical-consultation.service';
 import { UsersService } from 'src/integrations/users/application/services/users.services';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class MedicalConsultationServiceApp {
@@ -35,22 +35,20 @@ export class MedicalConsultationServiceApp {
 
   createConsultation = async (
     data: RegisterMedicalConsultationDto,
+    user: IUser,
   ): Promise<GetMedialConsultationDto> => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTg0MWQwYzktZWM5Zi00ODRkLWJiMDYtZmMzOGIxMzk1ZWM1IiwiZW5hYmxlZCI6dHJ1ZSwiZW1haWwiOiJtaW5nMXNoZWxsQGdtYWlsLmNvbSIsImlhdCI6MTY2Nzk2NDU3MSwiZXhwIjoxNjY4MDUwOTcxfQ.27lS1DeMNeM-XZkKtdx7QtPdu3QJNuE23I8qB3TFXmU';
     if (!data.patient_uuid) {
-      data.data_patient.password = 'password12';
+      data.data_patient.password = '123456';
       data.data_patient.roles = ['patient'];
       const newPatient = await this.usersService.CreateUser(
         data.data_patient,
-        token,
+        user.token,
       );
       const getUser = await this.usersService.GetUserByUuid(
         newPatient['uuid'],
-        token,
+        user.token,
       );
-      console.log('user get: ', getUser);
-
+      data.user_uuid = user[0].uuid;
       data.patient_uuid = getUser['uuid'];
       //Basic measurements
       data.basic_measurements.imc = imcFormulation(
@@ -136,9 +134,9 @@ export class MedicalConsultationServiceApp {
       // TODO Obtener datos del user de api_users
       const getUser = await this.usersService.GetUserByUuid(
         data.patient_uuid,
-        token,
+        user.token,
       );
-      console.log(getUser);
+      data.user_uuid = user[0].uuid;
       //Basic measurements
       data.basic_measurements.imc = imcFormulation(
         data.basic_measurements.weight,

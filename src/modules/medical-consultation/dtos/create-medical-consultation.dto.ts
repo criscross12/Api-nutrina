@@ -17,7 +17,6 @@ import { BoneDiametersDto } from './bone-diameters.dto';
 import { CreatePatientDto } from './create-patient.dto';
 
 export class RegisterMedicalConsultationDto {
-  @ApiProperty()
   user_uuid: string;
 
   @ApiProperty()
@@ -28,6 +27,12 @@ export class RegisterMedicalConsultationDto {
   @Type(() => CreatePatientDto)
   @ValidateNested()
   data_patient: CreatePatientDto;
+
+  @ApiProperty({ required: false })
+  @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
+  @Type(() => CreatePatientDto)
+  @ValidateNested()
+  medical_history: CreatePatientDto;
 
   @ApiProperty({ required: false })
   @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })

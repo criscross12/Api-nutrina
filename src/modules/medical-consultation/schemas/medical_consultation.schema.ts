@@ -1,8 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 @Schema({ collection: 'medical_consultation' })
 export class MedicalConsultationDocument extends Document {
+  @Prop({ type: String, default: () => uuidv4() })
+  uuid: string;
+
   @Prop()
   user_uuid: string;
 

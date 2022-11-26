@@ -12,16 +12,21 @@ async function bootstrap() {
 
   const appConfig = appConfigLoader();
   const logger: Logger = app.get(Logger);
+
+  app.setGlobalPrefix('api-nutrina');
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Doc api nutriologia')
     .setDescription('Documentación de api nutriologia')
-    .setVersion('1.0')
-    .addTag('AN')
+    .setVersion('1.0.0')
+    .setBasePath('api-nutrina')
+    .addBearerAuth()
+    .addTag('Api Nutrina')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('api-nutrina/doc', app, document);
 
-  app.enableCors();
   await app.listen(appConfig.port, null, () => {
     logger.log(`Listening: http://localhost:${appConfig.port}`, 'AppConfig');
     logger.log(`Environment: ${appConfig.env}`, 'AppConfig');

@@ -11,8 +11,8 @@ export class UsersService {
       .post(url, data, {
         headers: {
           'api-token': configEnv.apis.api_token,
-          Authorization: 'Bearer ' + token,
-        },
+          Authorization: token,
+        }, 
       })
       .then((data) => data.data)
       .catch((err) => {
@@ -28,7 +28,7 @@ export class UsersService {
       .get(url, {
         headers: {
           'api-token': configEnv.apis.api_token,
-          Authorization: 'Bearer ' + token,
+          Authorization: token,
         },
       })
       .then((data) => data.data)
