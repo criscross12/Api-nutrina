@@ -25,9 +25,7 @@ export class MedicalConsultationService {
   getMedicalConsultationByUuid = async (
     uuid: string,
   ): Promise<GetMedialConsultationDto> =>
-    convertToJson(
-      await this.medicalConsultationModel.findOne({ patient_uuid: uuid }),
-    );
+    convertToJson(await this.medicalConsultationModel.findOne({ uuid }));
 
   getAllMedicalConsultationByUuid = async (
     uuid: string,
@@ -35,7 +33,6 @@ export class MedicalConsultationService {
     const registers = await this.medicalConsultationModel
       .find({ patient_uuid: uuid })
       .exec();
-    console.log(registers);
     return registers.map((u) => parseDocument(u));
   };
 }

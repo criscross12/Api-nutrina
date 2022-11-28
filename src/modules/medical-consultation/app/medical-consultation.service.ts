@@ -44,6 +44,8 @@ export class MedicalConsultationServiceApp {
         data.data_patient,
         user.token,
       );
+      console.log('Usuario nuevo: ', newPatient);
+
       const getUser = await this.usersService.GetUserByUuid(
         newPatient['uuid'],
         user.token,

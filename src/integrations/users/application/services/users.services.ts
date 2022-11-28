@@ -12,7 +12,7 @@ export class UsersService {
         headers: {
           'api-token': configEnv.apis.api_token,
           Authorization: token,
-        }, 
+        },
       })
       .then((data) => data.data)
       .catch((err) => {
