@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
   Res,
+  Delete,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -71,6 +72,14 @@ export class MedicalConsultationController {
     return handleResponse(
       res,
       this.medicalConsultationServiceApp.getOneByUserUuid(user_uuid),
+    );
+  }
+
+  @Delete(':uuid')
+  deleteRegisterOne(@Res() res, @Param('uuid', ParseUUIDPipe) uuid: string) {
+    return handleResponse(
+      res,
+      this.medicalConsultationServiceApp.deleteOneByUuid(uuid),
     );
   }
 }

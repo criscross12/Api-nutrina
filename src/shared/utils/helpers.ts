@@ -1,4 +1,6 @@
 import { Document } from 'mongoose';
+import * as moment from 'moment';
+moment.locale('es');
 
 export class Helpers {
   parseDocument = (document: Document) =>
@@ -27,7 +29,10 @@ export const GetAge = (FN) => {
 };
 
 export const imcFormulation = (weight: number, height: number) => {
-  return weight / Math.pow(height, 2);
+  const res = (weight / Math.pow(height / 100, 2)).toFixed(2);
+  console.log(res);
+
+  return parseFloat(res);
 };
 
 export const iccFormulation = (waist: number, hip: number) => {
@@ -203,4 +208,9 @@ export const CorrectedArmF = (c_contracted_arm: number, pl_triceps: number) => {
 
 export const CorrectedLegF = (c_leg_max: number, pl_leg: number) => {
   return c_leg_max - pl_leg / 10;
+};
+
+export const getDateConsultation = (date) => {
+  const converDate = moment(date).format('Do MMMM  YYYY');
+  return converDate;
 };

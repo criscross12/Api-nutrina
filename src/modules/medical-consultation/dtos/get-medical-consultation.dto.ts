@@ -45,9 +45,9 @@ export class GetMedialConsultationDto {
   mifflin_st: number;
 
   @ApiProperty()
-  readonly created_at: string;
+  created_at: string;
   @Exclude()
-  readonly updated_at: string;
+  updated_at: string;
   @Exclude()
-  readonly deleted_at: string;
+  deleted_at: string;
 }

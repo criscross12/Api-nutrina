@@ -35,4 +35,11 @@ export class MedicalConsultationService {
       .exec();
     return registers.map((u) => parseDocument(u));
   };
+
+  deleteOneByUuid = async (uuid: string) => {
+    return await this.medicalConsultationModel.findOneAndUpdate(
+      { uuid },
+      { deleted_at: Date.now() },
+    );
+  };
 }

@@ -18,6 +18,7 @@ import {
   GCarboHydratesRes,
   GcalLipids,
   GcalProteins,
+  getDateConsultation,
 } from 'src/shared/utils/helpers';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
 import { RegisterMedicalConsultationDto } from '../dtos/create-medical-consultation.dto';
@@ -236,10 +237,18 @@ export class MedicalConsultationServiceApp {
   getOneByUserUuid = async (
     uuid: string,
   ): Promise<GetMedialConsultationDto[]> => {
-    const res =
+    let res =
       await this.medicalConsultationService.getAllMedicalConsultationByUuid(
         uuid,
       );
-    return plainToClass(QueryMedialConsultationDto, res);
+    return res.map((u) => {
+      u.created_at = getDateConsultation(u.created_at);
+      return u;
+    });
+  };
+
+  deleteOneByUuid = async (uuid: string) => {
+    await this.medicalConsultationService.deleteOneByUuid(uuid);
+    return { message: 'deleted' };
   };
 }

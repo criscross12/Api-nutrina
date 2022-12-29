@@ -13,6 +13,9 @@ export class CircumferencesDto {
   c_leg_max: number;
 
   @ApiProperty()
+  cmb: number;
+
+  @ApiProperty()
   c_mid_thigh: number;
 
   c_corrected_arm: number;
