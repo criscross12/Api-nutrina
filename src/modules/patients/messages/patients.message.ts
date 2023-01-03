@@ -7,7 +7,7 @@ new CustomConfigModule();
 
 export const PATIENT_MESSAGES: PostMessagesType = {
   [PatientMessagesEnum.NOT_FOUND]: new CustomMessage({
-    message: 'no se encontro la publicacion',
+    message: 'no se encontro al paciente',
     error: PatientMessagesEnum.NOT_FOUND,
   }),
   [PatientMessagesEnum.PATIENT_UUID_IS_INVALID]: new CustomMessage({
