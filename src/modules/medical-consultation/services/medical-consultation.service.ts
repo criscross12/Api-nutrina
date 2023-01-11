@@ -5,6 +5,7 @@ import { MedicalConsultationDocument } from '../schemas/medical_consultation.sch
 import { RegisterMedicalConsultationDto } from '../dtos/create-medical-consultation.dto';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
 import { convertToJson, parseDocument } from 'src/shared/helpers';
+import { UpdateConsultationDto } from '../dtos/update-consultation.dto';
 
 @Injectable()
 export class MedicalConsultationService {
@@ -20,6 +21,19 @@ export class MedicalConsultationService {
       registerMedicalConsultationDto,
     ).save();
     return convertToJson(res);
+  };
+
+  updateConsultationByUuid = (
+    id: string,
+    updateConsultationDto: UpdateConsultationDto,
+  ) => {
+    const update = this.medicalConsultationModel.findByIdAndUpdate(
+      id,
+      updateConsultationDto,
+    );
+    console.log('Update: ', update);
+
+    return update;
   };
 
   getMedicalConsultationByUuid = async (

@@ -30,15 +30,40 @@ export const GetAge = (FN) => {
 
 export const imcFormulation = (weight: number, height: number) => {
   const res = (weight / Math.pow(height / 100, 2)).toFixed(2);
-  console.log(res);
-
   return parseFloat(res);
 };
 
 export const iccFormulation = (waist: number, hip: number) => {
-  return waist / hip;
+  const res = (waist / hip).toFixed(2);
+  return parseFloat(res);
 };
 
+export const kgBodyFat = (weight: number, perGrease: number) => {
+  const res = ((weight * perGrease) / 100).toFixed(2);
+  return parseFloat(res);
+};
+
+export const kgMoscularMass = (weight: number, perMoscularMass: number) => {
+  const res = ((weight * perMoscularMass) / 100).toFixed(2);
+  return parseFloat(res);
+};
+export const maximumWeight = (weight: number) => {
+  const res = (weight * 24.9).toFixed(2);
+  return parseFloat(res);
+};
+export const minimumWeight = (weight: number) => {
+  const res = (weight * 18.5).toFixed(2);
+  return parseFloat(res);
+};
+export const idealWeight = (height: number, sex: string) => {
+  if (sex == 'F') {
+    const res = (Math.pow(height / 100, 2) * 21.5).toFixed(2);
+    return parseFloat(res);
+  } else if (sex === 'M') {
+    const res = (Math.pow(height / 100, 2) * 23).toFixed(2);
+    return parseFloat(res);
+  }
+};
 // P. Tricipital + P. Subescapular + P. Supraespinal
 export const plusThreePl = (
   pl_triceps: number,
@@ -199,7 +224,7 @@ export const GcalLipids = (kcalLipidsValue: number) => {
 };
 
 export const GcalProteins = (kcalProteinsValue: number) => {
-  return kcalProteinsValue / 9;
+  return kcalProteinsValue / 4;
 };
 
 export const CorrectedArmF = (c_contracted_arm: number, pl_triceps: number) => {

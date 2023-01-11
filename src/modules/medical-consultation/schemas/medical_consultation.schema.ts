@@ -50,6 +50,9 @@ export class MedicalConsultationDocument extends Document {
   mifflin_st: number;
 
   @Prop()
+  average: number;
+
+  @Prop()
   note: string;
 
   @Prop({ type: Date, nullable: false, default: Date.now() })

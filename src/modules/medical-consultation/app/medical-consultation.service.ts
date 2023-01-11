@@ -19,6 +19,11 @@ import {
   GcalLipids,
   GcalProteins,
   getDateConsultation,
+  kgBodyFat,
+  kgMoscularMass,
+  maximumWeight,
+  minimumWeight,
+  idealWeight,
 } from 'src/shared/utils/helpers';
 import { GetMedialConsultationDto } from '../dtos/get-medical-consultation.dto';
 import { RegisterMedicalConsultationDto } from '../dtos/create-medical-consultation.dto';
@@ -26,6 +31,7 @@ import { QueryMedialConsultationDto } from '../dtos/query-medical-consultation.d
 import { MedicalConsultationService } from '../services/medical-consultation.service';
 import { UsersService } from 'src/integrations/users/application/services/users.services';
 import { IUser } from '../interfaces/user.interface';
+import { UpdateConsultationDto } from '../dtos/update-consultation.dto';
 
 @Injectable()
 export class MedicalConsultationServiceApp {
@@ -70,19 +76,24 @@ export class MedicalConsultationServiceApp {
         data.circumferences.c_leg_max,
         data.plyometric_measurements.pl_leg,
       );
-      //Basic measurements end
-      //TODO agregar formulas restantes de consulta y nota
-      data.plyometric_measurements.three_pl = plusThreePl(
-        data.plyometric_measurements.pl_triceps,
-        data.plyometric_measurements.pl_subscapular,
-        data.plyometric_measurements.pl_supraspinal,
+      //Basic measurements end and started body measurements
+      data.body_measurements.grasa_kg = kgBodyFat(
+        data.basic_measurements.weight,
+        data.body_measurements.fat_percentage,
       );
-      data.plyometric_measurements.five_pl = plusFivePl(
-        data.plyometric_measurements.pl_triceps,
-        data.plyometric_measurements.pl_subscapular,
-        data.plyometric_measurements.pl_supraspinal,
-        data.plyometric_measurements.pl_abdominal,
-        data.plyometric_measurements.pl_thigh,
+      data.body_measurements.muscle_mass_kg = kgMoscularMass(
+        data.basic_measurements.weight,
+        data.body_measurements.muscle_mass_percentage,
+      );
+      data.body_measurements.maximum_weight = maximumWeight(
+        data.basic_measurements.weight,
+      );
+      data.body_measurements.minimum_weight = minimumWeight(
+        data.basic_measurements.weight,
+      );
+      data.body_measurements.ideal_weight = idealWeight(
+        data.basic_measurements.height,
+        getUser['sex'],
       );
       data.fao_who_onu = fao_who_onu(
         getUser['age'],
@@ -106,32 +117,24 @@ export class MedicalConsultationServiceApp {
         getUser['age'],
         data.basic_measurements.height,
       );
-      const average = averageCalories(
+      data.average = averageCalories(
         data.valencia,
         data.mifflin_st,
         data.harris_benedict,
         data.fao_who_onu,
       );
-      data.energy_distribution.kcalCarboHydrates = kcalCarboHydratesRes(
-        average,
-        data.energy_distribution.kcalCarboHydrates,
+      //TODO agregar formulas restantes de consulta y nota
+      data.plyometric_measurements.three_pl = plusThreePl(
+        data.plyometric_measurements.pl_triceps,
+        data.plyometric_measurements.pl_subscapular,
+        data.plyometric_measurements.pl_supraspinal,
       );
-      data.energy_distribution.kcalLipids = kcalLipids(
-        average,
-        data.energy_distribution.kcalLipids,
-      );
-      data.energy_distribution.kcalProteins = kcalProteins(
-        average,
-        data.energy_distribution.kcalProteins,
-      );
-      data.energy_distribution.gCarboHydrates = GCarboHydratesRes(
-        data.energy_distribution.kcalCarboHydrates,
-      );
-      data.energy_distribution.gLipids = GcalLipids(
-        data.energy_distribution.kcalLipids,
-      );
-      data.energy_distribution.gProteins = GcalProteins(
-        data.energy_distribution.kcalProteins,
+      data.plyometric_measurements.five_pl = plusFivePl(
+        data.plyometric_measurements.pl_triceps,
+        data.plyometric_measurements.pl_subscapular,
+        data.plyometric_measurements.pl_supraspinal,
+        data.plyometric_measurements.pl_abdominal,
+        data.plyometric_measurements.pl_thigh,
       );
     } else {
       // TODO Obtener datos del user de api_users
@@ -157,20 +160,26 @@ export class MedicalConsultationServiceApp {
         data.circumferences.c_leg_max,
         data.plyometric_measurements.pl_leg,
       );
-      //Basic measurements end
-      //TODO agregar formulas restantes de consulta y nota
-      data.plyometric_measurements.three_pl = plusThreePl(
-        data.plyometric_measurements.pl_triceps,
-        data.plyometric_measurements.pl_subscapular,
-        data.plyometric_measurements.pl_supraspinal,
+      //Basic measurements end and started body measurements
+      data.body_measurements.grasa_kg = kgBodyFat(
+        data.basic_measurements.weight,
+        data.body_measurements.fat_percentage,
       );
-      data.plyometric_measurements.five_pl = plusFivePl(
-        data.plyometric_measurements.pl_triceps,
-        data.plyometric_measurements.pl_subscapular,
-        data.plyometric_measurements.pl_supraspinal,
-        data.plyometric_measurements.pl_abdominal,
-        data.plyometric_measurements.pl_thigh,
+      data.body_measurements.muscle_mass_kg = kgMoscularMass(
+        data.basic_measurements.weight,
+        data.body_measurements.muscle_mass_percentage,
       );
+      data.body_measurements.maximum_weight = maximumWeight(
+        data.basic_measurements.weight,
+      );
+      data.body_measurements.minimum_weight = minimumWeight(
+        data.basic_measurements.weight,
+      );
+      data.body_measurements.ideal_weight = idealWeight(
+        data.basic_measurements.height,
+        getUser['sex'],
+      );
+
       data.fao_who_onu = fao_who_onu(
         getUser['age'],
         getUser['sex'],
@@ -193,32 +202,24 @@ export class MedicalConsultationServiceApp {
         getUser['age'],
         data.basic_measurements.height,
       );
-      const average = averageCalories(
+      data.average = averageCalories(
         data.valencia,
         data.mifflin_st,
         data.harris_benedict,
         data.fao_who_onu,
       );
-      data.energy_distribution.kcalCarboHydrates = kcalCarboHydratesRes(
-        average,
-        data.energy_distribution.kcalCarboHydrates,
+      //TODO agregar formulas restantes de consulta y nota
+      data.plyometric_measurements.three_pl = plusThreePl(
+        data.plyometric_measurements.pl_triceps,
+        data.plyometric_measurements.pl_subscapular,
+        data.plyometric_measurements.pl_supraspinal,
       );
-      data.energy_distribution.kcalLipids = kcalLipids(
-        average,
-        data.energy_distribution.kcalLipids,
-      );
-      data.energy_distribution.kcalProteins = kcalProteins(
-        average,
-        data.energy_distribution.kcalProteins,
-      );
-      data.energy_distribution.gCarboHydrates = GCarboHydratesRes(
-        data.energy_distribution.kcalCarboHydrates,
-      );
-      data.energy_distribution.gLipids = GcalLipids(
-        data.energy_distribution.kcalLipids,
-      );
-      data.energy_distribution.gProteins = GcalProteins(
-        data.energy_distribution.kcalProteins,
+      data.plyometric_measurements.five_pl = plusFivePl(
+        data.plyometric_measurements.pl_triceps,
+        data.plyometric_measurements.pl_subscapular,
+        data.plyometric_measurements.pl_supraspinal,
+        data.plyometric_measurements.pl_abdominal,
+        data.plyometric_measurements.pl_thigh,
       );
     }
     //End Data user
@@ -227,6 +228,46 @@ export class MedicalConsultationServiceApp {
       await this.medicalConsultationService.createConsultation(data),
     );
   };
+
+  async updateConsultation(
+    uuid: string,
+    user: IUser,
+    updateConsultationDto: UpdateConsultationDto,
+  ) {
+    const getRegister =
+      await this.medicalConsultationService.getMedicalConsultationByUuid(uuid);
+
+    updateConsultationDto.energy_distribution.kcalCarboHydrates =
+      kcalCarboHydratesRes(
+        getRegister.average,
+        updateConsultationDto.energy_distribution.kcalCarboHydrates,
+      );
+    updateConsultationDto.energy_distribution.kcalLipids = kcalLipids(
+      getRegister.average,
+      updateConsultationDto.energy_distribution.kcalLipids,
+    );
+    updateConsultationDto.energy_distribution.kcalProteins = kcalProteins(
+      getRegister.average,
+      updateConsultationDto.energy_distribution.kcalProteins,
+    );
+    updateConsultationDto.energy_distribution.gCarboHydrates =
+      GCarboHydratesRes(
+        updateConsultationDto.energy_distribution.kcalCarboHydrates,
+      );
+    updateConsultationDto.energy_distribution.gLipids = GcalLipids(
+      updateConsultationDto.energy_distribution.kcalLipids,
+    );
+    updateConsultationDto.energy_distribution.gProteins = GcalProteins(
+      updateConsultationDto.energy_distribution.kcalProteins,
+    );
+    console.log(updateConsultationDto);
+
+    const res = await this.medicalConsultationService.updateConsultationByUuid(
+      getRegister._id,
+      updateConsultationDto,
+    );
+    return res;
+  }
 
   getOne = async (uuid: string): Promise<GetMedialConsultationDto> => {
     const res =

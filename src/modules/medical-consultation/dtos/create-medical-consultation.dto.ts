@@ -30,12 +30,6 @@ export class RegisterMedicalConsultationDto {
 
   @ApiProperty({ required: false })
   @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
-  @Type(() => CreatePatientDto)
-  @ValidateNested()
-  medical_history: CreatePatientDto;
-
-  @ApiProperty({ required: false })
-  @IsObject({ message: MConsultationMessagesEnum.ACTION_INVALID })
   @Type(() => BasicMeasurementsDto)
   @ValidateNested()
   basic_measurements: BasicMeasurementsDto;
@@ -91,6 +85,8 @@ export class RegisterMedicalConsultationDto {
   valencia: number;
 
   mifflin_st: number;
+
+  average: number;
 
   @ApiProperty()
   @IsString()

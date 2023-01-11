@@ -46,6 +46,9 @@ export class QueryMedialConsultationDto extends PaginateDto {
   mifflin_st: number;
 
   @ApiProperty()
+  average: number;
+
+  @ApiProperty()
   readonly created_at: string;
   @Exclude()
   readonly updated_at: string;

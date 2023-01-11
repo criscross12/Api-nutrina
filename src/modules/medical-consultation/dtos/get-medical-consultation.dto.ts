@@ -44,6 +44,8 @@ export class GetMedialConsultationDto {
   @ApiProperty()
   mifflin_st: number;
 
+  average: number;
+
   @ApiProperty()
   created_at: string;
   @Exclude()

@@ -10,5 +10,5 @@ export class VitalSignsDto {
   heart_rate: number;
 
   @ApiProperty()
-  blood_pressure: number;
+  blood_pressure: string;
 }

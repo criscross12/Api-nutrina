@@ -8,6 +8,7 @@ import {
   UseGuards,
   Res,
   Delete,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -25,6 +26,7 @@ import { ListRoles } from 'src/shared/static/roles';
 import { ListPermissions } from 'src/shared/static/permissions';
 import { UserDecorator } from '../decorators/user.decorator';
 import { IUser } from '../interfaces/user.interface';
+import { UpdateConsultationDto } from '../dtos/update-consultation.dto';
 
 @Controller('medical-consultation')
 @ApiTags('medical-consultation')
@@ -48,6 +50,28 @@ export class MedicalConsultationController {
     return handleResponse(
       res,
       this.medicalConsultationServiceApp.createConsultation(data, user),
+    );
+  }
+
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: GetMedialConsultationDto })
+  @Permissions(ListPermissions.CREATE_DIET)
+  @Roles(ListRoles.SUPER_ADMIN)
+  @UseGuards(AuthGuard)
+  @Put('/update/:uuid')
+  updateConsultation(
+    @Param('uuid', ParseUUIDPipe) uuid: string,
+    @Body() updateMeDto: UpdateConsultationDto,
+    @UserDecorator() user: IUser,
+    @Res() res,
+  ): Promise<GetMedialConsultationDto> {
+    return handleResponse(
+      res,
+      this.medicalConsultationServiceApp.updateConsultation(
+        uuid,
+        user,
+        updateMeDto,
+      ),
     );
   }
 
